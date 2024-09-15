@@ -3,5 +3,6 @@
 import { cookies } from 'next/headers'
 
 export async function cookieSet(){
-  cookies().set('username','test@test.com')
+  const email = 'test@test.com'
+  cookies().set('username',email)
 }
