@@ -1,11 +1,10 @@
 import { cookies } from 'next/headers'
 
 export default function Page() {
-  const cookieStore = cookies()
-  //console.log(cookieStore.get('username'))
+  cookies().set('username','test@test.com')
   return (
     <div>
-      <h1>Test Page</h1>
+      <h1>쿠키 세팅용 페이지입니다.</h1>
     </div>
   )
 }
