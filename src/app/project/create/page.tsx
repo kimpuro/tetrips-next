@@ -9,7 +9,8 @@ export const metadata: Metadata = {
 };
 
 export default async function Page() {
-  const usernameData = cookies().get('username');
+  // const usernameData = cookies().get('username');
+  const usernameData = 'test@test.com'
   if (!usernameData) {
     redirect('/login');
   }

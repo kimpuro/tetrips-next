@@ -11,11 +11,13 @@ import NoProject from '@/components/project/NoProject'
 
 
 export default async function Page() {
-  const usernameData = cookies().get('username');
+  // const usernameData = cookies().get('username');
+  const usernameData = 'test@test.com'
   if (!usernameData) {
     redirect('/login');
   }
-  const username = usernameData.value;
+  // const username = usernameData.value;
+  const username = usernameData
 
   const projects = await fetchProjectsByUserId(username);
   const folders = await fetchFoldersByUserId(username);
