@@ -4,12 +4,14 @@ import { NextRequest, NextResponse } from 'next/server';
 import { ObjectId } from 'mongodb';
 import { convertToKoreanDate } from '@/utils/formatTime';
 import { cookies } from 'next/headers';
+import { auth } from '@/auth'
 
 export async function POST(request: NextRequest) {
 
   const client = await clientPromise;
   const db = client.db('travel');
   const projectCollection = db.collection('projects');
+  const session = await auth();
 
   try {
     const data = await request.json();
@@ -18,11 +20,11 @@ export async function POST(request: NextRequest) {
     const endDate = convertToKoreanDate(new Date(data.endDate));
     const startDateUTC = new Date(Date.UTC(startDate.getFullYear(), startDate.getMonth(), startDate.getDate()));
     const endDateUTC = new Date(Date.UTC(endDate.getFullYear(), endDate.getMonth(), endDate.getDate()));
-    const usernameData = cookies().get('username');
-    if (!usernameData) {
+    if (!session?.user) {
       return NextResponse.json({ error: '로그인이 필요합니다.' }, { status: 401 });
     }
-    const username = usernameData.value;
+ 
+    const username = session.user.email as string;
     const extractedNickname = username.split('@')[0];
     const itineraries: Itinerary[] = [];
 
