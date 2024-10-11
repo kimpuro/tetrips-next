@@ -23,7 +23,7 @@ export async function POST(request: NextRequest) {
     if (!session?.user) {
       return NextResponse.json({ error: '로그인이 필요합니다.' }, { status: 401 });
     }
- 
+
     const username = session.user.email as string;
     const extractedNickname = username.split('@')[0];
     const itineraries: Itinerary[] = [];

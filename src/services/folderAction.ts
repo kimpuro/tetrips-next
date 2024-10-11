@@ -4,6 +4,7 @@ import { ObjectId } from "mongodb";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { auth } from '@/auth'
 
 async function getCollection(collectionName: string) {
   const client = await clientPromise;
@@ -12,11 +13,11 @@ async function getCollection(collectionName: string) {
 }
 
 export async function createFolder(name: string) {
-  const usernameData = cookies().get('username');
-  if (!usernameData) {
+  const session = await auth();
+  if (!session?.user) {
     redirect('/login');
   }
-  const username = usernameData.value;
+  const username = session.user.email as string;
   try {
     const projectIds:string[] = [];
 
