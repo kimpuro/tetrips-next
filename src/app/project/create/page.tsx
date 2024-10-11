@@ -3,14 +3,15 @@ import { Metadata } from 'next';
 import { cookies } from 'next/headers';
 import Image from 'next/image';
 import { redirect } from 'next/navigation';
+import { auth } from '@/auth'
 
 export const metadata: Metadata = {
   title: 'Create Project',
 };
 
 export default async function Page() {
-  const usernameData = cookies().get('username');
-  if (!usernameData) {
+  const session = await auth()
+  if (!session?.user) {
     redirect('/login');
   }
   return (

@@ -6,6 +6,7 @@ import ProjectHeader from '@/components/project/ProjectHeader'
 import EditProjectForm from '@/components/project/EditProjectForm'
 import { cookies } from 'next/headers'
 import { revalidatePath } from 'next/cache'
+import { auth } from '@/auth'
 
 export const metadata: Metadata = {
   title: 'Edit Project',
@@ -17,12 +18,11 @@ export default async function Page({
   params: { projectId: string }
 }) {
 
-  const usernameData = cookies().get('username')
-  if (!usernameData) {
-    redirect('/login')
-
+  const session = await auth()
+  if (!session?.user) {
+    redirect('/login');
   }
-  const username = usernameData.value
+  const username = session.user.email as string;
 
   const userData = {
     email: username,
