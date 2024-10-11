@@ -7,15 +7,16 @@ import { redirect } from 'next/navigation'
 import { fetchFoldersByUserId } from '@/services/folderService'
 import ProjectsClient from '@/components/project/ProjectClient'
 import NoProject from '@/components/project/NoProject'
+import { auth } from '@/auth'
 
 
 
 export default async function Page() {
-  const usernameData = cookies().get('username');
-  if (!usernameData) {
+  const session = await auth()
+  if (!session?.user) {
     redirect('/login');
   }
-  const username = usernameData.value;
+  const username = session.user.email as string;
 
   const projects = await fetchProjectsByUserId(username);
   const folders = await fetchFoldersByUserId(username);
