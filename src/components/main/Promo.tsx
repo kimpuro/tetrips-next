@@ -1,3 +1,5 @@
+import PromoButton from '@/components/main/PromoButton'
+
 const collections = [
   {
     name: '서울',
@@ -66,12 +68,7 @@ export default function Promo() {
             여행 계획을 만들어 보세요!
           </h1>
           <div className="mt-4 sm:mt-6">
-            <a
-              href="/project"
-              className="inline-block rounded-md border border-transparent bg-white px-8 py-3 font-medium text-black hover:bg-amber-50"
-            >
-              프로젝트 생성
-            </a>
+            <PromoButton />
           </div>
         </div>
       </div>
